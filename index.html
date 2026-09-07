@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon AI - Delta University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #5A52D5;
+            --accent: #00D9FF;
+            --bg-dark: #0a0a1a;
+            --bg-card: #12122a;
+            --bg-input: #1a1a3e;
+            --text: #e0e0ff;
+            --text-muted: #8888aa;
+            --success: #00e676;
+            --danger: #ff5252;
+            --border: #2a2a5a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0 30px;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.4);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(108, 99, 255, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(108, 99, 255, 0.7), 0 0 80px rgba(0, 217, 255, 0.3); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .header-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+        }
+
+        .header-subtitle span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .nav-tab {
+            padding: 10px 30px;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .form-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .form-group label .required {
+            color: var(--danger);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-input);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            color: var(--text);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238888aa' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 15px center;
+            padding-left: 35px;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Skills Checkboxes */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .skill-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: var(--bg-input);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skill-option:hover {
+            border-color: var(--primary);
+        }
+
+        .skill-option input[type="checkbox"] {
+            display: none;
+        }
+
+        .skill-option input[type="checkbox"]:checked + .skill-check {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .skill-option input[type="checkbox"]:checked + .skill-check::after {
+            content: '✓';
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .skill-option input[type="checkbox"]:checked ~ .skill-label {
+            color: var(--accent);
+        }
+
+        .skill-check {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .skill-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), #8B5CF6);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Success Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            animation: modal-pop 0.4s ease;
+        }
+
+        @keyframes modal-pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--success), #00b060);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.3);
+        }
+
+        .modal-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .btn-close-modal {
+            padding: 12px 40px;
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close-modal:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Password Modal */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-modal.show {
+            display: flex;
+        }
+
+        .password-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 45px 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: modal-pop 0.4s ease;
+        }
+
+        .password-box.shake {
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-15px); }
+            40% { transform: translateX(15px); }
+            60% { transform: translateX(-10px); }
+            80% { transform: translateX(10px); }
+        }
+
+        .lock-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), #8B5CF6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.4);
+        }
+
+        .password-box h2 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .password-box p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+        }
+
+        .password-input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 14px 50px 14px 18px;
+            background: var(--bg-input);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            color: var(--text);
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 4px;
+            outline: none;
+            transition: all 0.3s ease;
+            direction: ltr;
+        }
+
+        .password-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
+        }
+
+        .password-input.error {
+            border-color: var(--danger);
+            box-shadow: 0 0 0 4px rgba(255, 82, 82, 0.15);
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .password-error-msg {
+            color: var(--danger);
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            min-height: 20px;
+        }
+
+        .btn-password-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), #8B5CF6);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .btn-password-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-password-cancel {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 8px 20px;
+            transition: color 0.3s;
+        }
+
+        .btn-password-cancel:hover {
+            color: var(--text);
+        }
+
+        .btn-admin.password-btn {
+            border-color: #FFB300;
+            color: #FFB300;
+        }
+
+        .btn-admin.password-btn:hover {
+            background: rgba(255, 179, 0, 0.1);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.show {
+            display: block;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-admin {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-admin:hover {
+            border-color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .btn-admin.danger {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .btn-admin.danger:hover {
+            background: rgba(255, 82, 82, 0.1);
+        }
+
+        .btn-admin.success {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .btn-admin.success:hover {
+            background: rgba(0, 230, 118, 0.1);
+        }
+
+        /* Registration Cards */
+        .reg-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .reg-card:hover {
+            border-color: var(--primary);
+        }
+
+        .reg-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .reg-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .reg-id {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: var(--bg-input);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .reg-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .reg-detail {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .reg-detail span {
+            color: var(--text);
+        }
+
+        .reg-skills {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .reg-skill-tag {
+            padding: 4px 12px;
+            background: rgba(108, 99, 255, 0.15);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .reg-date {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: left;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .no-data .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 18px;
+            background: var(--bg-input);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            color: var(--text);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Counter Badge */
+        .counter-badge {
+            background: var(--danger);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            margin-right: 5px;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .form-card {
+                padding: 25px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text h1 {
+                font-size: 1.6rem;
+            }
+
+            .logo-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 26px;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+
+            .reg-details {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tab {
+                padding: 8px 20px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Hide */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo-icon">🤖</div>
+                <div class="logo-text">
+                    <h1>HORIZON AI</h1>
+                    <p>Delta University</p>
+                </div>
+            </div>
+            <p class="header-subtitle">انضم لفريق <span>Horizon AI</span> وابدأ رحلتك في عالم الذكاء الاصطناعي 🚀</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('register')">📝 التسجيل</button>
+            <button class="nav-tab" onclick="showTab('admin')">📊 البيانات <span class="counter-badge" id="counterBadge">0</span></button>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="registerSection">
+            <div class="form-card">
+                <h2 class="form-title">📋 فورم التسجيل</h2>
+                <p class="form-desc">املأ البيانات التالية للانضمام لفريق Horizon AI</p>
+
+                <form id="registrationForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label>الاسم بالكامل <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="fullName" placeholder="أدخل اسمك الرباعي" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>الرقم القومي / ID <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="studentId" placeholder="رقم الطالب" required>
+                        </div>
+                        <div class="form-group">
+                            <label>السنة الدراسية <span class="required">*</span></label>
+                            <select class="form-control" id="year" required>
+                                <option value="" disabled selected>اختر السنة</option>
+                                <option value="الأولى">السنة الأولى</option>
+                                <option value="الثانية">السنة الثانية</option>
+                                <option value="الثالثة">السنة الثالثة</option>
+                                <option value="الرابعة">السنة الرابعة</option>
+                                <option value="الخامسة">السنة الخامسة</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>الكلية / القسم <span class="required">*</span></label>
+                        <select class="form-control" id="faculty" required>
+                            <option value="" disabled selected>اختر الكلية</option>
+                            <option value="هندسة - حاسبات">هندسة - حاسبات</option>
+                            <option value="هندسة - اتصالات">هندسة - اتصالات</option>
+                            <option value="هندسة - ميكاترونكس">هندسة - ميكاترونكس</option>
+                            <option value="هندسة - عمارة">هندسة - عمارة</option>
+                            <option value="هندسة - مدني">هندسة - مدني</option>
+                            <option value="حاسبات ومعلومات">حاسبات ومعلومات</option>
+                            <option value="ذكاء اصطناعي">ذكاء اصطناعي</option>
+                            <option value="علوم">علوم</option>
+                            <option value="إدارة أعمال">إدارة أعمال</option>
+                            <option value="صيدلة">صيدلة</option>
+                            <option value="طب أسنان">طب أسنان</option>
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>البريد الإلكتروني <span class="required">*</span></label>
+                            <input type="email" class="form-control" id="email" placeholder="example@email.com" required dir="ltr">
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الهاتف <span class="required">*</span></label>
+                            <input type="tel" class="form-control" id="phone" placeholder="01xxxxxxxxx" required dir="ltr">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>المهارات المهتم بيها <span class="required">*</span></label>
+                        <div class="skills-grid">
+                            <label class="skill-option">
+                                <input type="checkbox" name="skills" value="Machine Learning">
+                                <span class="skill-check"></span>
+                                <span class="skill-label">Machine Learning</span>
+                            </label>
+                            <label class="skill-option">
+                                <input type="checkbox" name="skills" value="Deep Learning">
+                                <span class="skill-check"></span>
+                                <span class="skill-label">Deep Learning</span>
+                            </label>
+                            <label class="skill-option">
+                                <input type="checkbox" name="skills" value="Computer Vision">
+                                <span class="skill-check"></span>
+                                <span class="skill-label">Computer Vision</span>
+                            </label>
+                            <label class="skill-option">
+                                <input type="checkbox" name="skills" value="NLP">
+                                <span class="skill-check"></span>
+                                <span class="skill-label">NLP</span>
+                            </label>
+                            <label class="skill-option">
+                                <input type="checkbox" name="skills" value="Data Science">
+                                <span class="skill-check"></span>
+                                <span class="skill-label">Data Science</span>
+                            </label>
+                            <label class="skill-option">
+                                <input type="checkbox" name="skills" value="Robotics">
+                                <span class="skill-check"></span>
+                                <span class="skill-label">Robotics</span>
+                            </label>
+                            <label class="skill-option">
+                                <input type="checkbox" name="skills" value="Web Development">
+                                <span class="skill-check"></span>
+                                <span class="skill-label">Web Development</span>
+                            </label>
+                            <label class="skill-option">
+                                <input type="checkbox" name="skills" value="Generative AI">
+                                <span class="skill-check"></span>
+                                <span class="skill-label">Generative AI</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>مستوى الخبرة <span class="required">*</span></label>
+                        <select class="form-control" id="experience" required>
+                            <option value="" disabled selected>اختر مستواك</option>
+                            <option value="مبتدئ">مبتدئ - لسه بتعلم</option>
+                            <option value="متوسط">متوسط - عندي أساسيات</option>
+                            <option value="متقدم">متقدم - عندي مشاريع</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ليه عايز تنضم لـ Horizon AI؟</label>
+                        <textarea class="form-control" id="motivation" placeholder="قولنا إيه اللي حمسك تنضم للفريق..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        🚀 سجل دلوقتي
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel" id="adminSection">
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalRegistrations">0</div>
+                    <div class="stat-label">إجمالي المسجلين</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="todayRegistrations">0</div>
+                    <div class="stat-label">تسجيلات اليوم</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="topSkill">-</div>
+                    <div class="stat-label">أكثر مهارة</div>
+                </div>
+            </div>
+
+            <div class="admin-actions">
+                <button class="btn-admin success" onclick="exportData()">📥 تصدير CSV</button>
+                <button class="btn-admin" onclick="exportJSON()">📋 تصدير JSON</button>
+                <button class="btn-admin password-btn" onclick="showChangePasswordModal()">🔑 تغيير الباسورد</button>
+                <button class="btn-admin danger" onclick="clearAllData()">🗑️ مسح الكل</button>
+            </div>
+
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 ابحث بالاسم أو الإيميل أو الكلية..." oninput="renderRegistrations()">
+
+            <div id="registrationsList"></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2026 <strong>Horizon AI</strong> — Delta University</p>
+            <p>صُنع بـ ❤️ لمجتمع الذكاء الاصطناعي</p>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box" id="passwordBox">
+            <div class="lock-icon">🔒</div>
+            <h2>منطقة محمية</h2>
+            <p>أدخل الباسورد للوصول لبيانات المسجلين</p>
+            <div class="password-input-group">
+                <input type="password" class="password-input" id="adminPassword" placeholder="••••••" onkeydown="if(event.key==='Enter') checkPassword()">
+                <button class="toggle-password" onclick="togglePasswordVisibility()" id="togglePassBtn">👁️</button>
+            </div>
+            <div class="password-error-msg" id="passwordError"></div>
+            <button class="btn-password-submit" onclick="checkPassword()">🔓 دخول</button>
+            <br>
+            <button class="btn-password-cancel" onclick="closePasswordModal()">رجوع</button>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="password-modal" id="changePasswordModal">
+        <div class="password-box" id="changePasswordBox">
+            <div class="lock-icon">⚙️</div>
+            <h2>تغيير الباسورد</h2>
+            <p>أدخل الباسورد الحالي والجديد</p>
+            <div class="password-input-group">
+                <input type="password" class="password-input" id="currentPassword" placeholder="الباسورد الحالي" style="margin-bottom:12px; letter-spacing:2px;">
+            </div>
+            <div class="password-input-group">
+                <input type="password" class="password-input" id="newPassword" placeholder="الباسورد الجديد" style="margin-bottom:12px; letter-spacing:2px;">
+            </div>
+            <div class="password-input-group">
+                <input type="password" class="password-input" id="confirmNewPassword" placeholder="تأكيد الباسورد الجديد" style="letter-spacing:2px;" onkeydown="if(event.key==='Enter') changePassword()">
+            </div>
+            <div class="password-error-msg" id="changePasswordError"></div>
+            <button class="btn-password-submit" onclick="changePassword()">✅ تغيير</button>
+            <br>
+            <button class="btn-password-cancel" onclick="closeChangePasswordModal()">إلغاء</button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">✓</div>
+            <h2>تم التسجيل بنجاح! 🎉</h2>
+            <p>أهلاً بيك في عيلة Horizon AI<br>هنتواصل معاك قريب إن شاء الله</p>
+            <button class="btn-close-modal" onclick="closeModal()">تمام 👍</button>
+        </div>
+    </div>
+
+    <script>
+        // ========== PARTICLE BACKGROUND ==========
+        function createParticles() {
+            const bg = document.getElementById('bgAnimation');
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                particle.style.animationDelay = (Math.random() * 10) + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                bg.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ========== LOCAL STORAGE HELPERS ==========
+        const STORAGE_KEY = 'horizon_ai_registrations';
+
+        function getRegistrations() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveRegistration(entry) {
+            const registrations = getRegistrations();
+            registrations.push(entry);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(registrations));
+        }
+
+        // ========== PASSWORD SYSTEM ==========
+        const PASSWORD_KEY = 'horizon_ai_admin_password';
+        let isAdminAuthenticated = false;
+
+        function getAdminPassword() {
+            return localStorage.getItem(PASSWORD_KEY) || 'horizon2026';
+        }
+
+        function showPasswordModal() {
+            document.getElementById('passwordModal').classList.add('show');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('adminPassword').classList.remove('error');
+            setTimeout(() => document.getElementById('adminPassword').focus(), 300);
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.remove('show');
+            // Re-activate register tab
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs[0].classList.add('active');
+            tabs[1].classList.remove('active');
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('adminPassword');
+            const btn = document.getElementById('togglePassBtn');
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('adminPassword');
+            const entered = input.value;
+            const correct = getAdminPassword();
+
+            if (entered === correct) {
+                isAdminAuthenticated = true;
+                document.getElementById('passwordModal').classList.remove('show');
+                // Show admin panel
+                document.getElementById('registerSection').classList.add('hidden');
+                document.getElementById('adminSection').classList.add('show');
+                updateStats();
+                renderRegistrations();
+            } else {
+                input.classList.add('error');
+                document.getElementById('passwordError').textContent = '❌ الباسورد غلط، حاول تاني';
+                const box = document.getElementById('passwordBox');
+                box.classList.remove('shake');
+                void box.offsetWidth; // Force reflow
+                box.classList.add('shake');
+                input.select();
+            }
+        }
+
+        function showChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.add('show');
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmNewPassword').value = '';
+            document.getElementById('changePasswordError').textContent = '';
+            setTimeout(() => document.getElementById('currentPassword').focus(), 300);
+        }
+
+        function closeChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.remove('show');
+        }
+
+        function changePassword() {
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmNewPassword').value;
+            const errorEl = document.getElementById('changePasswordError');
+
+            if (current !== getAdminPassword()) {
+                errorEl.textContent = '❌ الباسورد الحالي غلط';
+                const box = document.getElementById('changePasswordBox');
+                box.classList.remove('shake');
+                void box.offsetWidth;
+                box.classList.add('shake');
+                return;
+            }
+
+            if (newPass.length < 4) {
+                errorEl.textContent = '❌ الباسورد الجديد لازم يكون 4 حروف على الأقل';
+                return;
+            }
+
+            if (newPass !== confirm) {
+                errorEl.textContent = '❌ الباسورد الجديد مش متطابق';
+                return;
+            }
+
+            localStorage.setItem(PASSWORD_KEY, newPass);
+            closeChangePasswordModal();
+            alert('✅ تم تغيير الباسورد بنجاح!');
+        }
+
+        // ========== TAB NAVIGATION ==========
+        function showTab(tab) {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+
+            if (tab === 'register') {
+                document.getElementById('registerSection').classList.remove('hidden');
+                document.getElementById('adminSection').classList.remove('show');
+                tabs[0].classList.add('active');
+                isAdminAuthenticated = false;
+            } else {
+                tabs[1].classList.add('active');
+                if (isAdminAuthenticated) {
+                    document.getElementById('registerSection').classList.add('hidden');
+                    document.getElementById('adminSection').classList.add('show');
+                    updateStats();
+                    renderRegistrations();
+                } else {
+                    showPasswordModal();
+                }
+            }
+        }
+
+        // ========== FORM SUBMISSION ==========
+        function handleSubmit(e) {
+            e.preventDefault();
+
+            const skills = [];
+            document.querySelectorAll('input[name="skills"]:checked').forEach(cb => {
+                skills.push(cb.value);
+            });
+
+            if (skills.length === 0) {
+                alert('من فضلك اختار مهارة واحدة على الأقل');
+                return;
+            }
+
+            const phone = document.getElementById('phone').value;
+            if (!/^01[0-9]{9}$/.test(phone)) {
+                alert('من فضلك أدخل رقم هاتف صحيح (01xxxxxxxxx)');
+                return;
+            }
+
+            const entry = {
+                id: 'HRZ-' + Date.now().toString(36).toUpperCase(),
+                fullName: document.getElementById('fullName').value.trim(),
+                studentId: document.getElementById('studentId').value.trim(),
+                year: document.getElementById('year').value,
+                faculty: document.getElementById('faculty').value,
+                email: document.getElementById('email').value.trim(),
+                phone: phone,
+                skills: skills,
+                experience: document.getElementById('experience').value,
+                motivation: document.getElementById('motivation').value.trim(),
+                registeredAt: new Date().toISOString()
+            };
+
+            saveRegistration(entry);
+            updateCounter();
+
+            // Show success modal
+            document.getElementById('successModal').classList.add('show');
+
+            // Reset form
+            document.getElementById('registrationForm').reset();
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('show');
+        }
+
+        // ========== ADMIN PANEL ==========
+        function updateCounter() {
+            const count = getRegistrations().length;
+            document.getElementById('counterBadge').textContent = count;
+        }
+
+        function updateStats() {
+            const registrations = getRegistrations();
+            const total = registrations.length;
+            const today = new Date().toDateString();
+            const todayCount = registrations.filter(r => new Date(r.registeredAt).toDateString() === today).length;
+
+            document.getElementById('totalRegistrations').textContent = total;
+            document.getElementById('todayRegistrations').textContent = todayCount;
+
+            // Top skill
+            if (total > 0) {
+                const skillCount = {};
+                registrations.forEach(r => {
+                    r.skills.forEach(s => {
+                        skillCount[s] = (skillCount[s] || 0) + 1;
+                    });
+                });
+                const topSkill = Object.keys(skillCount).reduce((a, b) => skillCount[a] > skillCount[b] ? a : b);
+                document.getElementById('topSkill').textContent = topSkill;
+                document.getElementById('topSkill').style.fontSize = '0.85rem';
+            }
+        }
+
+        function renderRegistrations() {
+            const registrations = getRegistrations();
+            const searchQuery = document.getElementById('searchBox').value.toLowerCase();
+            const container = document.getElementById('registrationsList');
+
+            const filtered = registrations.filter(r =>
+                r.fullName.toLowerCase().includes(searchQuery) ||
+                r.email.toLowerCase().includes(searchQuery) ||
+                r.faculty.toLowerCase().includes(searchQuery) ||
+                r.studentId.toLowerCase().includes(searchQuery)
+            ).reverse(); // Show newest first
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <div class="icon">📭</div>
+                        <p>${searchQuery ? 'مفيش نتائج للبحث' : 'مفيش تسجيلات لسه'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(r => `
+                <div class="reg-card">
+                    <div class="reg-header">
+                        <span class="reg-name">${escapeHTML(r.fullName)}</span>
+                        <span class="reg-id">${r.id}</span>
+                    </div>
+                    <div class="reg-details">
+                        <div class="reg-detail">📧 <span>${escapeHTML(r.email)}</span></div>
+                        <div class="reg-detail">📱 <span dir="ltr">${escapeHTML(r.phone)}</span></div>
+                        <div class="reg-detail">🏛️ <span>${escapeHTML(r.faculty)}</span></div>
+                        <div class="reg-detail">📚 السنة <span>${escapeHTML(r.year)}</span></div>
+                        <div class="reg-detail">🎯 <span>${escapeHTML(r.experience)}</span></div>
+                        <div class="reg-detail">🆔 <span>${escapeHTML(r.studentId)}</span></div>
+                    </div>
+                    <div class="reg-skills">
+                        ${r.skills.map(s => `<span class="reg-skill-tag">${escapeHTML(s)}</span>`).join('')}
+                    </div>
+                    ${r.motivation ? `<div class="reg-detail" style="margin-top:10px;">💬 <span>${escapeHTML(r.motivation)}</span></div>` : ''}
+                    <div class="reg-date">🕐 ${new Date(r.registeredAt).toLocaleString('ar-EG')}</div>
+                </div>
+            `).join('');
+        }
+
+        // ========== EXPORT ==========
+        function exportData() {
+            const registrations = getRegistrations();
+            if (registrations.length === 0) {
+                alert('مفيش بيانات للتصدير');
+                return;
+            }
+
+            // BOM for Arabic support in Excel
+            const BOM = '\uFEFF';
+            const headers = ['ID', 'الاسم', 'رقم الطالب', 'السنة', 'الكلية', 'الإيميل', 'الهاتف', 'المهارات', 'الخبرة', 'الدافع', 'تاريخ التسجيل'];
+            const rows = registrations.map(r => [
+                r.id,
+                r.fullName,
+                r.studentId,
+                r.year,
+                r.faculty,
+                r.email,
+                r.phone,
+                r.skills.join(' | '),
+                r.experience,
+                r.motivation || '',
+                new Date(r.registeredAt).toLocaleString('ar-EG')
+            ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(','));
+
+            const csv = BOM + headers.join(',') + '\n' + rows.join('\n');
+            downloadFile(csv, 'horizon_ai_registrations.csv', 'text/csv;charset=utf-8');
+        }
+
+        function exportJSON() {
+            const registrations = getRegistrations();
+            if (registrations.length === 0) {
+                alert('مفيش بيانات للتصدير');
+                return;
+            }
+            const json = JSON.stringify(registrations, null, 2);
+            downloadFile(json, 'horizon_ai_registrations.json', 'application/json');
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ متأكد إنك عايز تمسح كل البيانات؟ العملية دي مش هتترجع!')) {
+                if (confirm('🔴 تأكيد نهائي: مسح كل التسجيلات؟')) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    updateCounter();
+                    updateStats();
+                    renderRegistrations();
+                    alert('✅ تم مسح كل البيانات');
+                }
+            }
+        }
+
+        // ========== UTILITY ==========
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // ========== INIT ==========
+        updateCounter();
+    </script>
+</body>
+</html>
