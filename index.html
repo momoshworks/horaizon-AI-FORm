@@ -7,17 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6C63FF;
-            --primary-dark: #5A52D5;
-            --accent: #00D9FF;
-            --bg-dark: #0a0a1a;
-            --bg-card: #12122a;
-            --bg-input: #1a1a3e;
-            --text: #e0e0ff;
-            --text-muted: #8888aa;
-            --success: #00e676;
-            --danger: #ff5252;
-            --border: #2a2a5a;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #00e5ff;
+            --accent-purple: #a855f7;
+            --bg-dark: #000000;
+            --bg-card: #09090e;
+            --bg-input: #101018;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: #1e1e2e;
+            --border-highlight: #312e81;
         }
 
         * {
@@ -43,6 +45,7 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
+            background: radial-gradient(circle at 50% 15%, #0f0c24 0%, #000000 70%);
         }
 
         .bg-animation .particle {
@@ -51,7 +54,7 @@
             height: 3px;
             background: var(--accent);
             border-radius: 50%;
-            opacity: 0.3;
+            opacity: 0.35;
             animation: float-up linear infinite;
         }
 
@@ -61,10 +64,10 @@
                 opacity: 0;
             }
             10% {
-                opacity: 0.3;
+                opacity: 0.4;
             }
             90% {
-                opacity: 0.3;
+                opacity: 0.4;
             }
             100% {
                 transform: translateY(-10vh) scale(1);
@@ -75,7 +78,7 @@
         .container {
             position: relative;
             z-index: 1;
-            max-width: 700px;
+            max-width: 720px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -83,60 +86,85 @@
         /* Header */
         .header {
             text-align: center;
-            padding: 40px 0 30px;
+            padding: 35px 0 25px;
         }
 
         .logo-container {
             display: inline-flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 16px;
+            margin-bottom: 12px;
         }
 
         .logo-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 20px;
+            width: 76px;
+            height: 76px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(0, 229, 255, 0.15));
+            border: 2px solid rgba(0, 229, 255, 0.4);
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 0 30px rgba(108, 99, 255, 0.4);
+            box-shadow: 0 0 35px rgba(99, 102, 241, 0.35), inset 0 0 15px rgba(0, 229, 255, 0.2);
             animation: pulse-glow 3s ease-in-out infinite;
         }
 
+        .logo-icon svg {
+            width: 44px;
+            height: 44px;
+            fill: none;
+            stroke: var(--accent);
+            filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.7));
+        }
+
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 30px rgba(108, 99, 255, 0.4); }
-            50% { box-shadow: 0 0 50px rgba(108, 99, 255, 0.7), 0 0 80px rgba(0, 217, 255, 0.3); }
+            0%, 100% { 
+                box-shadow: 0 0 25px rgba(99, 102, 241, 0.3);
+                border-color: rgba(0, 229, 255, 0.35);
+            }
+            50% { 
+                box-shadow: 0 0 45px rgba(99, 102, 241, 0.6), 0 0 70px rgba(0, 229, 255, 0.3);
+                border-color: rgba(0, 229, 255, 0.75);
+            }
         }
 
         .logo-text h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #fff, var(--accent));
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         .logo-text p {
             font-size: 0.85rem;
             color: var(--text-muted);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .header-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-muted);
+            font-family: 'Orbitron', 'Cairo', sans-serif;
+            font-size: 1.35rem;
+            color: #ffffff;
             margin-top: 15px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
         }
 
         .header-subtitle span {
             color: var(--accent);
-            font-weight: 700;
+        }
+
+        .header-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 6px;
         }
 
         /* Navigation Tabs */
@@ -172,13 +200,120 @@
             box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
         }
 
+        /* Member Count Hero Banner */
+        .member-counter-hero {
+            background: linear-gradient(135deg, rgba(16, 16, 28, 0.8), rgba(10, 10, 18, 0.95));
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            border-radius: 20px;
+            padding: 16px 24px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(99, 102, 241, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-counter-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.08));
+            pointer-events: none;
+        }
+
+        .hero-count-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .hero-count-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .hero-count-text h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .hero-count-text p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .hero-count-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            padding: 0 10px;
+        }
+
+        /* Server Sync Indicator */
+        .server-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 30px;
+            font-size: 0.78rem;
+            color: var(--success);
+            margin-bottom: 18px;
+        }
+
+        .server-status-pill.offline {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+
+        .server-pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--success);
+            animation: server-blink 1.8s infinite;
+        }
+
+        .server-status-pill.offline .server-pulse {
+            background: var(--danger);
+            box-shadow: 0 0 10px var(--danger);
+        }
+
+        @keyframes server-blink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
         /* Form Card */
         .form-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.05);
             backdrop-filter: blur(10px);
         }
 
@@ -863,13 +998,26 @@
         <!-- Header -->
         <div class="header">
             <div class="logo-container">
-                <div class="logo-icon">🤖</div>
+                <div class="logo-icon">
+                    <!-- AI Brain Neural SVG Icon -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9.5 3.5C7.5 3.5 5.5 5 5.5 7.5c0 1.2.5 2.3 1.3 3-.8.7-1.3 1.8-1.3 3 0 2 1.5 3.7 3.5 4v2.5M14.5 3.5c2 0 4 1.5 4 4 0 1.2-.5 2.3-1.3 3 .8.7 1.3 1.8 1.3 3 0 2-1.5 3.7-3.5 4v2.5"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 4v16M9 8h2M13 8h2M8.5 12.5H11M13 12.5h2.5M9 16.5h2M13 16.5h2"/>
+                        <circle cx="8" cy="8" r="1" fill="#00e5ff"/>
+                        <circle cx="16" cy="8" r="1" fill="#00e5ff"/>
+                        <circle cx="7.5" cy="12.5" r="1" fill="#00e5ff"/>
+                        <circle cx="16.5" cy="12.5" r="1" fill="#00e5ff"/>
+                        <circle cx="8" cy="16.5" r="1" fill="#00e5ff"/>
+                        <circle cx="16" cy="16.5" r="1" fill="#00e5ff"/>
+                    </svg>
+                </div>
                 <div class="logo-text">
                     <h1>HORIZON AI</h1>
                     <p>Delta University</p>
                 </div>
             </div>
-            <p class="header-subtitle">انضم لفريق <span>Horizon AI</span> وابدأ رحلتك في عالم الذكاء الاصطناعي 🚀</p>
+            <h2 class="header-subtitle">WHO YOU ARE</h2>
+            <p class="header-desc">انضم إلى مجتمع الذكاء الاصطناعي بجامعة الدلتا وحدد مسارك المستقبلي 🚀</p>
         </div>
 
         <!-- Navigation -->
@@ -880,9 +1028,25 @@
 
         <!-- Registration Form -->
         <div id="registerSection">
+            <!-- Members Count Hero Card -->
+            <div class="member-counter-hero">
+                <div class="hero-count-info">
+                    <div class="hero-count-icon">🧠</div>
+                    <div class="hero-count-text">
+                        <h3>أعضاء Horizon AI</h3>
+                        <p>عدد المسجلين في الفريق حتى الآن</p>
+                    </div>
+                </div>
+                <div class="hero-count-number" id="heroMembersCount">0</div>
+            </div>
+
             <div class="form-card">
+                <div class="server-status-pill" id="serverStatus">
+                    <span class="server-pulse"></span>
+                    <span>سيرفر سحابي نشط + حفظ مباشر بالجهاز</span>
+                </div>
                 <h2 class="form-title">📋 فورم التسجيل</h2>
-                <p class="form-desc">املأ البيانات التالية للانضمام لفريق Horizon AI</p>
+                <p class="form-desc">املأ بياناتك للانضمام لفريق هورايزون AI</p>
 
                 <form id="registrationForm" onsubmit="handleSubmit(event)">
                     <div class="form-group">
@@ -909,21 +1073,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>الكلية / القسم <span class="required">*</span></label>
-                        <select class="form-control" id="faculty" required>
-                            <option value="" disabled selected>اختر الكلية</option>
-                            <option value="هندسة - حاسبات">هندسة - حاسبات</option>
-                            <option value="هندسة - اتصالات">هندسة - اتصالات</option>
-                            <option value="هندسة - ميكاترونكس">هندسة - ميكاترونكس</option>
-                            <option value="هندسة - عمارة">هندسة - عمارة</option>
-                            <option value="هندسة - مدني">هندسة - مدني</option>
-                            <option value="حاسبات ومعلومات">حاسبات ومعلومات</option>
-                            <option value="ذكاء اصطناعي">ذكاء اصطناعي</option>
-                            <option value="علوم">علوم</option>
-                            <option value="إدارة أعمال">إدارة أعمال</option>
-                            <option value="صيدلة">صيدلة</option>
-                            <option value="طب أسنان">طب أسنان</option>
-                            <option value="أخرى">أخرى</option>
+                        <label>الميول <span class="required">*</span></label>
+                        <select class="form-control" id="track" required>
+                            <option value="" disabled selected>اختر الميول</option>
+                            <option value="CyberAI">CyberAI</option>
+                            <option value="BioAI">BioAI</option>
+                            <option value="General AI">General AI</option>
                         </select>
                     </div>
 
@@ -1026,11 +1181,12 @@
             <div class="admin-actions">
                 <button class="btn-admin success" onclick="exportData()">📥 تصدير CSV</button>
                 <button class="btn-admin" onclick="exportJSON()">📋 تصدير JSON</button>
+                <button class="btn-admin" style="border-color: var(--accent); color: var(--accent);" onclick="showCloudServerModal()">☁️ سيرفر مجاني (Google Sheets)</button>
                 <button class="btn-admin password-btn" onclick="showChangePasswordModal()">🔑 تغيير الباسورد</button>
                 <button class="btn-admin danger" onclick="clearAllData()">🗑️ مسح الكل</button>
             </div>
 
-            <input type="text" class="search-box" id="searchBox" placeholder="🔍 ابحث بالاسم أو الإيميل أو الكلية..." oninput="renderRegistrations()">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 ابحث بالاسم أو الإيميل أو الميول أو ID..." oninput="renderRegistrations()">
 
             <div id="registrationsList"></div>
         </div>
@@ -1039,6 +1195,39 @@
         <div class="footer">
             <p>© 2026 <strong>Horizon AI</strong> — Delta University</p>
             <p>صُنع بـ ❤️ لمجتمع الذكاء الاصطناعي</p>
+        </div>
+    </div>
+
+    <!-- Cloud Server Config Modal -->
+    <div class="password-modal" id="cloudServerModal">
+        <div class="password-box" style="max-width: 550px; text-align: right;">
+            <div class="lock-icon" style="background: linear-gradient(135deg, var(--accent), var(--primary));">☁️</div>
+            <h2 style="text-align: center;">ربط سيرفر سحابي مجاني</h2>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+                البيانات بتتسجل حالياً على الجهاز تلقائياً. تقدر كمان تربطها بـ <strong>Google Sheets</strong> أو أي Webhook مجاني عشان توصلك البيانات مباشرة في شيت أونلاين!
+            </p>
+
+            <div class="form-group" style="text-align: right;">
+                <label style="font-size: 0.85rem; color: var(--accent);">رابط Webhook المجاني (Google Apps Script / Formspree):</label>
+                <input type="url" class="form-control" id="cloudWebhookUrl" placeholder="https://script.google.com/macros/s/.../exec" dir="ltr" style="font-size: 0.85rem;">
+            </div>
+
+            <div style="background: rgba(99, 102, 241, 0.1); border: 1px dashed var(--border-highlight); border-radius: 12px; padding: 12px; margin-bottom: 20px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+                💡 <strong>طريقة التفعيل بـ Google Sheets مجاناً في دقيقة:</strong><br>
+                1. افتح <a href="https://sheets.new" target="_blank" style="color: var(--accent); text-decoration: underline;">Google Sheets جديد</a>.<br>
+                2. اضغط على <code>Extensions</code> ⬅️ <code>Apps Script</code>.<br>
+                3. امسح الكود وحط كود الـ Script الجاهز (اضغط زر النسخ بالأسفل).<br>
+                4. اضغط <code>Deploy</code> ⬅️ <code>New deployment</code> ⬅️ نوع <code>Web app</code> ⬅️ اختر Who has access: <strong>Anyone</strong>.<br>
+                5. انسخ الرابط وحطه في الخانة اللي فوق واضغط حفظ!
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                <button class="btn-admin" style="flex: 1; border-color: var(--accent); color: var(--accent);" onclick="copyGoogleScript()">📋 نسخ كود Google Script</button>
+                <button class="btn-password-submit" style="flex: 1; margin-bottom: 0;" onclick="saveCloudWebhook()">💾 حفظ الرابط</button>
+            </div>
+            <div style="text-align: center;">
+                <button class="btn-password-cancel" onclick="closeCloudServerModal()">إغلاق</button>
+            </div>
         </div>
     </div>
 
@@ -1248,8 +1437,109 @@
             }
         }
 
+        // ========== CLOUD SERVER & WEBHOOK CONFIG ==========
+        const CLOUD_WEBHOOK_KEY = 'horizon_ai_cloud_webhook';
+
+        function getCloudWebhook() {
+            return localStorage.getItem(CLOUD_WEBHOOK_KEY) || '';
+        }
+
+        function showCloudServerModal() {
+            const modal = document.getElementById('cloudServerModal');
+            document.getElementById('cloudWebhookUrl').value = getCloudWebhook();
+            modal.classList.add('show');
+        }
+
+        function closeCloudServerModal() {
+            document.getElementById('cloudServerModal').classList.remove('show');
+        }
+
+        function saveCloudWebhook() {
+            const url = document.getElementById('cloudWebhookUrl').value.trim();
+            localStorage.setItem(CLOUD_WEBHOOK_KEY, url);
+            closeCloudServerModal();
+            updateServerStatus();
+            alert('✅ تم حفظ رابط السيرفر السحابي بنجاح! سيتم إرسال كل تسجيل جديد إليه مباشرة.');
+        }
+
+        function updateServerStatus() {
+            const statusEl = document.getElementById('serverStatus');
+            const url = getCloudWebhook();
+            if (url) {
+                statusEl.innerHTML = `<span class="server-pulse"></span><span>سيرفر سحابي متصل (Google Sheets / Webhook) + حفظ بالجهاز</span>`;
+                statusEl.classList.remove('offline');
+            } else {
+                statusEl.innerHTML = `<span class="server-pulse"></span><span>تسجيل مباشر بالجهاز (جاهز للربط بسيرفر سحابي مجاني)</span>`;
+                statusEl.classList.remove('offline');
+            }
+        }
+
+        function copyGoogleScript() {
+            const scriptCode = `// == كود Google Apps Script لتسجيل بيانات هورايزون AI مجاناً ==
+function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    // عمل رؤوس الأعمدة لو الشيت جديد
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        "ID", "الاسم", "رقم الطالب", "السنة", "الميول", 
+        "الإيميل", "الهاتف", "المهارات", "المستوى", "الدافع", "تاريخ التسجيل"
+      ]);
+      sheet.getRange(1, 1, 1, 11).setFontWeight("bold").setBackground("#6366f1").setFontColor("#ffffff");
+    }
+    
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.id || "",
+      data.fullName || "",
+      data.studentId || "",
+      data.year || "",
+      data.track || "",
+      data.email || "",
+      "'" + (data.phone || ""),
+      (data.skills || []).join(", "),
+      data.experience || "",
+      data.motivation || "",
+      new Date().toLocaleString("ar-EG")
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
+            navigator.clipboard.writeText(scriptCode).then(() => {
+                alert("📋 تم نسخ كود Google Apps Script بنجاح!\nالآن الصقه في Apps Script بـ Google Sheets ثم اضغط Deploy.");
+            }).catch(() => {
+                prompt("انسخ الكود التالي:", scriptCode);
+            });
+        }
+
+        async function sendToCloudServer(entry) {
+            const webhook = getCloudWebhook();
+            if (!webhook) return;
+
+            try {
+                // إرسال للـ Webhook (Google Sheets أو أي سيرفر مجاني)
+                await fetch(webhook, {
+                    method: 'POST',
+                    mode: 'no-cors', // لضمان العمل مع Google Apps Script بدون حظر CORS
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(entry)
+                });
+                console.log('Synced with cloud server successfully');
+            } catch (err) {
+                console.warn('Cloud sync offline or error:', err);
+            }
+        }
+
         // ========== FORM SUBMISSION ==========
-        function handleSubmit(e) {
+        async function handleSubmit(e) {
             e.preventDefault();
 
             const skills = [];
@@ -1268,12 +1558,16 @@
                 return;
             }
 
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ جاري التسجيل والحفظ...';
+
             const entry = {
                 id: 'HRZ-' + Date.now().toString(36).toUpperCase(),
                 fullName: document.getElementById('fullName').value.trim(),
                 studentId: document.getElementById('studentId').value.trim(),
                 year: document.getElementById('year').value,
-                faculty: document.getElementById('faculty').value,
+                track: document.getElementById('track').value,
                 email: document.getElementById('email').value.trim(),
                 phone: phone,
                 skills: skills,
@@ -1282,8 +1576,15 @@
                 registeredAt: new Date().toISOString()
             };
 
+            // 1. الحفظ على الجهاز فوراً
             saveRegistration(entry);
             updateCounter();
+
+            // 2. المزامنة مع السيرفر السحابي المجاني (Google Sheets / Webhook)
+            await sendToCloudServer(entry);
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🚀 سجل دلوقتي';
 
             // Show success modal
             document.getElementById('successModal').classList.add('show');
@@ -1299,7 +1600,10 @@
         // ========== ADMIN PANEL ==========
         function updateCounter() {
             const count = getRegistrations().length;
-            document.getElementById('counterBadge').textContent = count;
+            const badge = document.getElementById('counterBadge');
+            const heroCount = document.getElementById('heroMembersCount');
+            if (badge) badge.textContent = count;
+            if (heroCount) heroCount.textContent = count;
         }
 
         function updateStats() {
@@ -1333,7 +1637,8 @@
             const filtered = registrations.filter(r =>
                 r.fullName.toLowerCase().includes(searchQuery) ||
                 r.email.toLowerCase().includes(searchQuery) ||
-                r.faculty.toLowerCase().includes(searchQuery) ||
+                (r.track && r.track.toLowerCase().includes(searchQuery)) ||
+                (r.faculty && r.faculty.toLowerCase().includes(searchQuery)) ||
                 r.studentId.toLowerCase().includes(searchQuery)
             ).reverse(); // Show newest first
 
@@ -1356,9 +1661,9 @@
                     <div class="reg-details">
                         <div class="reg-detail">📧 <span>${escapeHTML(r.email)}</span></div>
                         <div class="reg-detail">📱 <span dir="ltr">${escapeHTML(r.phone)}</span></div>
-                        <div class="reg-detail">🏛️ <span>${escapeHTML(r.faculty)}</span></div>
+                        <div class="reg-detail">🎯 الميول: <span style="color:var(--accent); font-weight:700;">${escapeHTML(r.track || r.faculty || '-')}</span></div>
                         <div class="reg-detail">📚 السنة <span>${escapeHTML(r.year)}</span></div>
-                        <div class="reg-detail">🎯 <span>${escapeHTML(r.experience)}</span></div>
+                        <div class="reg-detail">⚡ الخبرة: <span>${escapeHTML(r.experience)}</span></div>
                         <div class="reg-detail">🆔 <span>${escapeHTML(r.studentId)}</span></div>
                     </div>
                     <div class="reg-skills">
@@ -1380,13 +1685,13 @@
 
             // BOM for Arabic support in Excel
             const BOM = '\uFEFF';
-            const headers = ['ID', 'الاسم', 'رقم الطالب', 'السنة', 'الكلية', 'الإيميل', 'الهاتف', 'المهارات', 'الخبرة', 'الدافع', 'تاريخ التسجيل'];
+            const headers = ['ID', 'الاسم', 'رقم الطالب', 'السنة', 'الميول', 'الإيميل', 'الهاتف', 'المهارات', 'الخبرة', 'الدافع', 'تاريخ التسجيل'];
             const rows = registrations.map(r => [
                 r.id,
                 r.fullName,
                 r.studentId,
                 r.year,
-                r.faculty,
+                r.track || r.faculty || '',
                 r.email,
                 r.phone,
                 r.skills.join(' | '),
@@ -1440,6 +1745,7 @@
 
         // ========== INIT ==========
         updateCounter();
+        updateServerStatus();
     </script>
 </body>
 </html>
